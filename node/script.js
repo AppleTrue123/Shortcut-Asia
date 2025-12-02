@@ -1,16 +1,39 @@
-// --- Data and Elements Setup ---
+// --- Data Persistence Helper Functions using localStorage ---
+function loadData(key, defaultData) {
+    const stored = localStorage.getItem(key);
+    if (stored) {
+        try {
+            // localStorage stores strings, so we must parse it back to a JS object/array
+            return JSON.parse(stored);
+        } catch (e) {
+            console.error(`Error parsing data from localStorage for key: ${key}`, e);
+            return defaultData; // Return default data if parsing fails
+        }
+    }
+    return defaultData; // Return default data if nothing is stored
+}
 
-// Simulating a student list (for selection) - Now uses 'let' to allow modification
-let STUDENTS = ['Liau Ze Xi', 'Fathima Nuha Nizar', 'Dina Kamelia Binti Muhamad Husaini', 'Lee Bi Ying'];
+function saveData(key, data) {
+    // Convert the JS object/array into a string before saving
+    localStorage.setItem(key, JSON.stringify(data));
+}
 
-// Simulated database: Stores all submitted feedback
-let feedbackData = [
-     // Pre-populate with some data for demonstration
+
+// --- Data and Elements Setup (Now Persistent) ---
+
+// Define the static default data
+const DEFAULT_STUDENTS = ['Liau Ze Xi', 'Fathima Nuha Nizar', 'Dina Kamelia Binti Muhamad Husaini', 'Lee Bi Ying'];
+const DEFAULT_FEEDBACK = [
+    // Pre-populate with some data for demonstration
     { target: 'Fathima Nuha Nizar', comment: 'She was excellent at organization and kept the project on track. Great leadership!' },
     { target: 'Fathima Nuha Nizar', comment: 'Needs to improve communication during code reviews; sometimes too brief.' },
     { target: 'Dina Kamelia Binti Muhamad Husaini', comment: 'He did a fantastic job on the design mockups. Very creative.' },
     { target: 'Lee Bi Ying', comment: 'Bi Ying struggled a bit with the backend integration, maybe needs more practice with APIs.' }
 ];
+
+// Load data from localStorage, falling back to defaults if not found
+let STUDENTS = loadData('students', DEFAULT_STUDENTS); // Key: 'students'
+let feedbackData = loadData('feedback', DEFAULT_FEEDBACK); // Key: 'feedback'
 
 // Existing Elements
 const targetSelect = document.getElementById('targetSelect'); // For Give Feedback Form
@@ -29,7 +52,6 @@ const removePeerBtn = document.getElementById('removePeerBtn');
 
 
 // --- Helper Function: Populate All Student Dropdowns ---
-// This function is now called on initial load and whenever the STUDENTS list changes
 function populateDropdowns() {
     // Clear existing options, keeping the default placeholder
     targetSelect.innerHTML = '<option value="" disabled selected>Select Peer</option>';
@@ -59,7 +81,7 @@ populateDropdowns();
 
 addPeerBtn.addEventListener('click', function() {
     const newPeer = peerNameInput.value.trim();
-
+    
     if (newPeer === "") {
         alert("Please enter a name to add.");
         return;
@@ -73,6 +95,7 @@ addPeerBtn.addEventListener('click', function() {
     }
 
     STUDENTS.push(newPeer);
+    saveData('students', STUDENTS); // 👈 PERSISTENCE: Save updated student list
     populateDropdowns(); // Re-render the dropdowns
     alert(`Peer '${newPeer}' added successfully.`);
     peerNameInput.value = ''; // Clear input
@@ -80,7 +103,7 @@ addPeerBtn.addEventListener('click', function() {
 
 removePeerBtn.addEventListener('click', function() {
     const peerToRemove = peerNameInput.value.trim();
-
+    
     if (peerToRemove === "") {
         alert("Please enter a name to remove.");
         return;
@@ -90,10 +113,11 @@ removePeerBtn.addEventListener('click', function() {
 
     if (index !== -1) {
         STUDENTS.splice(index, 1); // Remove the peer from the list
+        saveData('students', STUDENTS); // 👈 PERSISTENCE: Save updated student list
 
         // Important: Update UI
         populateDropdowns(); 
-
+        
         // Reset the summary view if the removed peer was currently selected
         if (summarySelect.value === peerToRemove) {
             summarySelect.value = ""; // Reset the select
@@ -109,17 +133,18 @@ removePeerBtn.addEventListener('click', function() {
 
 // --- Function 1: Anonymous Feedback Forms (Submission Logic) ---
 feedbackForm.addEventListener('submit', function(event) {
-    event.preventDefault(); 
+    event.preventDefault(); 
 
     const targetName = targetSelect.value;
     const comment = document.getElementById('feedbackText').value.trim();
 
     if (targetName && comment) {
-        // Store the new feedback anonymously
+          // Store the new feedback anonymously
         feedbackData.push({
             target: targetName,
             comment: comment
         });
+        saveData('feedback', feedbackData); // 👈 PERSISTENCE: Save updated feedback data
 
         // Confirmation message and reset form
         alert(`Anonymous feedback successfully submitted for ${targetName}.`);
@@ -168,7 +193,7 @@ function renderSummary(targetPeer) {
     feedbackSummaryList.innerHTML = ''; 
 
     if (!targetPeer) {
-         // Fallback for no selection
+          // Fallback for no selection
         feedbackSummaryList.innerHTML = '<p style="text-align: center; color: #9ca3af;">Please select a peer above.</p>';
         document.getElementById('summaryTargetName').textContent = 'Selected Peer';
         return;
