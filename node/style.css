@@ -17,10 +17,8 @@ body {
     display: grid;
     grid-template-columns: 250px 1fr; 
     min-height: 100vh;
-    /* --- IMPROVISATION FOR CENTERING --- */
-    max-width: 1200px; /* Limits the app's width */
-    margin: 0 auto; /* Centers the container horizontally */
-    /* ---------------------------------- */
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 /* --- Sidebar Styling --- */
@@ -39,8 +37,6 @@ body {
     margin-bottom: 30px;
     color: #fff;
 }
-
-/* Removed the .user-id styling block */
 
 .main-nav {
     display: flex;
@@ -64,7 +60,7 @@ body {
 }
 
 .nav-spacer {
-    flex-grow: 1; /* Pushes the last nav-item (Logout) to the bottom */
+    flex-grow: 1;
 }
 
 
