@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peer Feedback Platform | Open Access</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <aside class="sidebar">
+            <div class="logo">Open Peer Review</div>
+            <nav class="main-nav">
+                <a href="#" class="nav-item active" id="giveFeedbackBtn">
+                    <span class="icon">💬</span> Give Feedback
+                </a>
+                <a href="#" class="nav-item" id="viewSummaryBtn">
+                    <span class="icon">📈</span> View Summaries
+                </a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            
+                        <section id="peerManagementPanel" style="margin-bottom: 30px; border: 1px dashed #cccccc; padding: 15px; border-radius: 8px;">
+                <h3>👥 Peer Management</h3>
+                <div class="form-group" style="display: flex; gap: 5px;">
+                    <input type="text" id="peerNameInput" placeholder="Enter peer's full name" style="flex-grow: 1; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                    <button id="addPeerBtn" type="button" class="submit-btn" style="background-color: #10b981; min-width: 80px;">Add</button>
+                    <button id="removePeerBtn" type="button" class="submit-btn" style="background-color: #ef4444; min-width: 80px;">Remove</button>
+                </div>
+            </section>
+            
+            <section id="submissionPanel">
+                <h2>Anonymous Feedback Form</h2>
+                <p class="instruction">Select a peer and provide constructive feedback. Your name will NOT be attached.</p>
+                
+                <form id="feedbackForm" class="feedback-form">
+                    <div class="form-group">
+                        <label for="targetSelect">Feedback is for:</label>
+                        <select id="targetSelect" required>
+                            <option value="" disabled selected>Select Peer</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="feedbackText">Constructive Comment:</label>
+                        <textarea id="feedbackText" rows="5" placeholder="What did this team member do well, and what could they improve?" required></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Submit Anonymous Feedback</button>
+                </form>
+            </section>
+
+            <section id="summaryPanel" class="hidden">
+                <h2>View Peer Feedback Summaries</h2>
+                <p class="instruction">Select a peer to view the aggregated, anonymous input they have received.</p>
+                
+                <div class="form-group summary-selector">
+                    <label for="summarySelect">View feedback for:</label>
+                    <select id="summarySelect">
+                        <option value="" disabled selected>Select Peer</option>
+                    </select>
+                </div>
+                
+                <h3>Feedback for <span id="summaryTargetName">Selected Peer</span></h3>
+                <div id="feedbackSummaryList" class="summary-list">
+                    <p style="text-align: center; color: #9ca3af;">Please select a peer above.</p>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

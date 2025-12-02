@@ -1,0 +1,165 @@
+/* --- Global & Layout Setup --- */
+:root {
+    --color-primary: #10b981; /* A friendly, professional green (like the submit button) */
+    --color-secondary: #f4f7f9; /* Off-white background */
+    --color-dark: #1e293b; /* Dark Blue/Gray for Sidebar */
+    --color-text: #374151;
+    --color-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--color-secondary);
+}
+
+.app-container {
+    display: grid;
+    grid-template-columns: 250px 1fr; 
+    min-height: 100vh;
+    /* --- IMPROVISATION FOR CENTERING --- */
+    max-width: 1200px; /* Limits the app's width */
+    margin: 0 auto; /* Centers the container horizontally */
+    /* ---------------------------------- */
+}
+
+/* --- Sidebar Styling --- */
+.sidebar {
+    background-color: var(--color-dark);
+    color: #fff;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 30px;
+    color: #fff;
+}
+
+/* Removed the .user-id styling block */
+
+.main-nav {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.nav-item {
+    padding: 12px 20px;
+    text-decoration: none;
+    color: #cbd5e1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background-color 0.2s;
+}
+
+.nav-item:hover, .nav-item.active {
+    background-color: #334155;
+    color: #fff;
+}
+
+.nav-spacer {
+    flex-grow: 1; /* Pushes the last nav-item (Logout) to the bottom */
+}
+
+
+/* --- Main Content & Panel Styling --- */
+.main-content {
+    padding: 40px;
+}
+
+h2 {
+    color: var(--color-text);
+    margin-bottom: 10px;
+}
+
+.instruction {
+    color: #6b7280;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 15px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* --- Function 1: Feedback Form Styling --- */
+.feedback-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: var(--color-shadow);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--color-text);
+}
+
+.feedback-form select, .feedback-form textarea {
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 1rem;
+    resize: vertical;
+}
+
+.submit-btn {
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: background-color 0.2s;
+}
+
+.submit-btn:hover {
+    background-color: #059669;
+}
+
+
+/* --- Function 2: Summary View Styling --- */
+.summary-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px; /* Space from the selector */
+}
+
+.feedback-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    border-left: 5px solid var(--color-primary); /* Visual accent */
+}
+
+.feedback-card p {
+    margin: 0;
+    line-height: 1.5;
+    color: #4b5563;
+}
+
+.feedback-card small {
+    display: block;
+    margin-top: 10px;
+    color: #9ca3af;
+    font-style: italic;
+}
